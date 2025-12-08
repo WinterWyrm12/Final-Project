@@ -9,11 +9,11 @@ const db = new Sequelize({
 });
 
 // Some apis put their models here, mine are in the models folder so I need to load them here
-const artist = require("./models/artist")(Sequelize, DataTypes);
-const event = require("./models/event")(Sequelize, DataTypes);
-const rsvp = require("./models/rsvp")(Sequelize, DataTypes);
-const setList = require("./models/setList")(Sequelize, DataTypes);
-const user = require("./models/user")(Sequelize, DataTypes);
+const artist = require("./models/artist")(db, DataTypes);
+const event = require("./models/event")(db, DataTypes);
+const rsvp = require("./models/rsvp")(db, DataTypes);
+const setList = require("./models/setList")(db, DataTypes);
+const user = require("./models/user")(db, DataTypes);
 
 // Define relationships
 /* one-to-many */
