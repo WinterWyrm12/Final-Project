@@ -27,7 +27,7 @@ rsvp.belongsTo(user, {foreignKey: "userId"});
 
 // event - rsvps
 event.hasMany(rsvp, {foreignKey: "eventId", as: "rsvps"});
-rsvp.belongsTo(event, {foreignKey: "evemtId"});
+rsvp.belongsTo(event, {foreignKey: "eventId"});
 
 // event - setlists
 event.hasMany(setList, {foreignKey: "eventId", as: "setLists"});
@@ -55,4 +55,4 @@ async function initializeDatabase(){
 initializeDatabase();
 
 // export modules
-module.exports={Sequelize, user, event, artist, setList, rsvp};
+module.exports={db, user, event, artist, setList, rsvp};
