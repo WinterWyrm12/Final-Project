@@ -31,7 +31,7 @@ rsvp.belongsTo(event, {foreignKey: "eventId"});
 
 // event - setlists
 event.hasMany(setList, {foreignKey: "eventId", as: "setLists"});
-setList.belongsTo(event, {foreignKey: "eventid"});
+setList.belongsTo(event, {foreignKey: "eventId"});
 
 // artist - setlists
 artist.hasMany(setList, {foreignKey: "artistId", as: "setLists"});

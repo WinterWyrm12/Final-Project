@@ -1,7 +1,7 @@
 const { DataTypes, Sequelize } = require("sequelize");
 
 module.exports = (Sequelize, DataTypes) => {
-    const User = Sequelize.define(
+    const user = Sequelize.define(
         "User",{
             id: {
                 type: DataTypes.INTEGER,
@@ -33,5 +33,6 @@ module.exports = (Sequelize, DataTypes) => {
                     isIn: [['manager', 'artist', 'guest']]
                 }
             }
-        }
-    )};
+        });
+    return user;
+};
