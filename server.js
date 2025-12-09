@@ -321,6 +321,23 @@ app.delete("/rsvps/:id", async (req,res)=>{
 
 // -------------------- //
 
+// Error handeling middleware
+app.use((err, req, res, next) => {
+    console.error('Unhandled error:', err);
+    res.status(500).json({ 
+        error: 'Internal server error',
+        message: process.env.NODE_ENV === 'development' ? err.message : 'Something went wrong'
+    });
+});
+
+// 404
+app.use((req, res) => {
+    res.status(404).json({ 
+        error: 'Endpoint not found',
+        message: `${req.method} ${req.path} is not a valid endpoint`
+    });
+});
+
 // Server start
 app.listen(PORT, () => {
     console.log(`Server running on port http://localhost:${PORT}`);
