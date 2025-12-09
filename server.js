@@ -24,10 +24,10 @@ app.post("/users", async(req, res)=>{
 // User - GET ALL
 app.get("/users", async(req, res)=>{
     try{
-        const newUser = await user.findAll();
+        const users = await user.findAll();
         res.json(users);
     } catch (error) {
-        res.status(500).json({error: "Failed to retrive users."});
+        res.status(500).json({error: "Failed to retrieve users."});
     }
 });
 
@@ -86,10 +86,10 @@ app.post("/artists", async(req, res)=>{
 // Artist - GET ALL
 app.get("/artists", async(req, res)=>{
     try{
-        const newArtist = await artist.findAll();
+        const artists = await artist.findAll();
         res.json(artists);
     } catch (error) {
-        res.status(500).json({error: "Failed to retrive artists."});
+        res.status(500).json({error: "Failed to retrieve artists."});
     }
 });
 
@@ -148,10 +148,10 @@ app.post("/events", async(req, res)=>{
 // Event - GET ALL
 app.get("/events", async(req, res)=>{
     try{
-        const newEvent = await event.findAll();
+        const events = await event.findAll();
         res.json(events);
     } catch (error) {
-        res.status(500).json({error: "Failed to retrive events."});
+        res.status(500).json({error: "Failed to retrieve events."});
     }
 });
 
@@ -210,10 +210,10 @@ app.post("/setLists", async(req, res)=>{
 // SetList - GET ALL
 app.get("/setLists", async(req, res)=>{
     try{
-        const NewSetLists = await setList.findAll();
+        const setLists = await setList.findAll();
         res.json(setLists);
     } catch (error) {
-        res.status(500).json({error: "Failed to retrive setLists."});
+        res.status(500).json({error: "Failed to retrieve setLists."});
     }
 });
 
@@ -262,7 +262,7 @@ app.delete("/setLists/:id", async (req,res)=>{
 // Rsvp - CREATE
 app.post("/rsvps", async(req, res)=>{
     try{
-        const newRsvp = await rsvp.create(req,body);
+        const newRsvp = await rsvp.create(req.body);
         res.status(201).json(newRsvp);
     } catch (error) {
         res.status(400).json({error: error.message});
@@ -272,10 +272,10 @@ app.post("/rsvps", async(req, res)=>{
 // Rsvp - GET ALL
 app.get("/rsvps", async(req, res)=>{
     try{
-        const newRsvp = await rsvp.findAll();
+        const rsvps = await rsvp.findAll();
         res.json(rsvps);
     } catch (error) {
-        res.status(500).json({error: "Failed to retrive rsvps."});
+        res.status(500).json({error: "Failed to retrieve rsvps."});
     }
 });
 
@@ -342,3 +342,6 @@ app.use((req, res) => {
 app.listen(PORT, () => {
     console.log(`Server running on port http://localhost:${PORT}`);
 });
+
+// test
+module.exports = {app};
