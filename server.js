@@ -9,6 +9,10 @@ const {db, user, setList, rsvp, event, artist} = require("./database/setup");
 
 // middleware
 app.use(express.json());
+// logging - logs the date of CRUD methods
+app.use((req, res, next) => {
+    console.log(`${req.method} - ${new Date().toISOString()}`);
+})
 
 /* CRUD Routes */
 // User - CREATE

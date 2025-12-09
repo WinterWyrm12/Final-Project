@@ -30,6 +30,11 @@ describe("concert planner api test", () => {
         const res = await request(app).delete("/users/1");
         expect(res.statusCode).toBe(200);
     });
+    // GET a user that doesn't exist
+    test("should display an error", async ()=>{
+        const res = await request(app).get("/users/67");
+        expect(res.statusCode).toBe(404);
+    })
 
     /* Artists */
     // Create
