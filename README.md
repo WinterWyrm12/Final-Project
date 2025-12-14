@@ -1,11 +1,20 @@
 # Final-Project Concert Planner API
 
-A REST API for concert planning. It allows users to manage users, artists, setlists, and RSVPs.
+A REST API for concert planning.
+This API allows users to manage users, artists, setlists, events, and RSVPs.
 
 ## Features
 - User, Artist, Event, SetList, and RSVP registration and authentication
 - JWT-based authentication
 - CRUD operations
+
+## Authentication and User Roles
+- user: can view events, artists, setlists, and RSVPs
+- artist: can manage setlists, and view artist only endpoints
+- admin: can manage events, artists, setlists, etc. (full access)
+
+### Authentication Note
+- For authorization, follow the following format for the header tab when using Postman: "Bearer <JWT_TOKEN>"
 
 ## API Endpoints and Examples
 #### USERS
@@ -83,6 +92,8 @@ A REST API for concert planning. It allows users to manage users, artists, setli
 - DB_TYPE = sqlite
 - DB_NAME = concerts.db 
 - PORT = 3000
+- JWT_SECRET = super-long-random-secret-key
+- JWT_EXPIRES_IN = 24h
 
 ### Setup
 1. Clone the repository

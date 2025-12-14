@@ -3,6 +3,7 @@ const app = express();
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const PORT = process.env.PORT || 3000;
+const cors = require("cors");
 
 // import the databases
 const {db, user, setList, rsvp, event, artist} = require("./database/setup");
@@ -14,6 +15,7 @@ app.use((req, res, next) => {
     console.log(`${req.method} - ${new Date().toISOString()}`);
     next();
 });
+app.use(cors());
 
 // Authentication
 function requireAuth(req, res, next){
