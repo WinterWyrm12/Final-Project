@@ -84,7 +84,7 @@ app.post("/users", async(req, res)=>{
         const hashedPass = await bcrypt.hash(password, saltRounds);
 
         const newUser = await user.create({name, email, password: hashedPass});
-        res.status(201).json({message: "User registered successfully", newUser});
+        res.status(201).json({message: "User registered successfully",newUser});
     } catch (error) {
         res.status(500).json({error: error.message});
     }
@@ -224,7 +224,7 @@ app.post("/events", requireAuth, requireAdmin, async(req, res)=>{
 });
 
 // Event - GET ALL
-app.get("/events", requireAuth, requireAdmin, async(req, res)=>{
+app.get("/events", requireAuth, async(req, res)=>{
     try{
         const events = await event.findAll();
         res.json(events);
@@ -234,7 +234,7 @@ app.get("/events", requireAuth, requireAdmin, async(req, res)=>{
 });
 
 // Event - GET ONE
-app.get("/events/:id", requireAuth, requireAdmin, async(req,res)=>{
+app.get("/events/:id", requireAuth, async(req,res)=>{
     try{
         const foundEvent = await event.findByPk(req.params.id);
         if (!foundEvent){

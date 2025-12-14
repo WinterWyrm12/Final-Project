@@ -1,4 +1,5 @@
 // **Example date was generated using ChatGPT and edited by me ** //
+const bcrypt = require('bcryptjs');
 const { db, user, artist, event, setList, rsvp } = require('./setup');
 
 async function seedDatabase() {
@@ -6,25 +7,26 @@ async function seedDatabase() {
     // Reset database
         await db.sync({ force: true });
         console.log('Database synced.');
+        const hashedPass = await bcrypt.hash("password123", 10);
 
         /* Users */
         const users = await Promise.all([
             user.create({
                 name: 'Alice',
                 email: 'alice@example.com',
-                password: 'pasword123',
+                password: hashedPass,
                 role: 'guest'
             }),
             user.create({
                 name: 'Bob',
                 email: 'bob@example.com',
-                password: 'password123',
+                password: hashedPass,
                 role: 'artist'
             }),
             user.create({
                 name: 'Charlie',
                 email: 'charlie@example.com',
-                password: 'password123',
+                password: hashedPass,
                 role: 'admin'
             })
         ]);
