@@ -88,6 +88,18 @@ This API allows users to manage users, artists, setlists, events, and RSVPs.
     "status": "attending"
 }
 
+#### Login
+- POST  | /login    | Logs in User
+
+##### Example POST:
+{
+    "email": "example@example.com",
+    "password": "password123"
+}
+
+#### Logout
+- POST  | /logout   | Logs out User
+
 ### Environmental Variables
 - DB_TYPE = sqlite
 - DB_NAME = concerts.db 
