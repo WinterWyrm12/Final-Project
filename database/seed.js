@@ -1,4 +1,4 @@
-// **Example date was generated using ChatGPT** //
+// **Example date was generated using ChatGPT and edited by me ** //
 const { db, user, artist, event, setList, rsvp } = require('./setup');
 
 async function seedDatabase() {
@@ -12,17 +12,20 @@ async function seedDatabase() {
             user.create({
                 name: 'Alice',
                 email: 'alice@example.com',
-                password: 'pasword123' 
+                password: 'pasword123',
+                role: 'guest'
             }),
             user.create({
                 name: 'Bob',
                 email: 'bob@example.com',
-                password: 'password123'
+                password: 'password123',
+                role: 'artist'
             }),
             user.create({
                 name: 'Charlie',
                 email: 'charlie@example.com',
-                password: 'password123'
+                password: 'password123',
+                role: 'admin'
             })
         ]);
         console.log('Users created');

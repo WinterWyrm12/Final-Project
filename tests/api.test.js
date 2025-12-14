@@ -2,9 +2,27 @@ const request = require("supertest");
 const app = require("../server");
 const {db, user, artist, event, setList, rsvp } = require("../database/setup");
 
+// for jwt testing
+let artistToken;
+let adminToken
+
+async function register_login(role = "user", emailFiller= "") {
+    const email = `${role}${emailFiller}@test.com`;
+    const password = "password123";
+    // register
+    await request (app).post("/users").send({name:role,email,password});
+    await user.update({role},{where:{email}});
+    // login
+    const login = await request(app).post("/login").send({email,password});
+    return login.body.token;
+};
+
 //resets the database before the tests are run
 beforeAll(async () => {
     await db.sync({force:true});
+    userToken = await register_login("user");
+    artistToken = await register_login("artist", "1");
+    adminToken = await register_login("admin", "2");
 });
 
 describe("concert planner api test", () => {
@@ -37,11 +55,7 @@ describe("concert planner api test", () => {
     })
 
     /* Artists */
-    // Create
-    test("create new artist", async () => {
-        const res = await request(app).post("/artists").send({ name: "Michael Jackson", genre: "Rock"});
-        expect(res.statusCode).toBe(201);
-    });
+    // Create - check authorization
     // Get all
     test("display all artists", async ()=>{
         const res = await request(app).get("/artists");
@@ -59,11 +73,7 @@ describe("concert planner api test", () => {
     });
 
     /* Events */
-    // Create
-    test("create new event", async () => {
-        const res = await request(app).post("/events").send({ title: "Cochella", venue: "the Diamond", date: "12-01-2025", genre: "Hiphop"});
-        expect(res.statusCode).toBe(201);
-    });
+    // Create - check authorization
     // Get all
     test("display all events", async ()=>{
         const res = await request(app).get("/events");
@@ -123,4 +133,44 @@ describe("concert planner api test", () => {
         const res = await request(app).delete("/rsvps/1");
         expect(res.statusCode).toBe(200);
     });
+
+    // login
+    test("login success", async ()=> {
+        const res = await request(app).post("/login").send({email:"user@test.com", password: "password123"});
+        expect(res.statusCode).toBe(200);
+    });
+    test("login fail", async ()=> {
+        const res = await request(app).post("/login").send({email:"user@test.com", password: "password321"});
+        expect(res.statusCode).toBe(401);
+    });
+
+    // logout
+    test("logout success", async ()=> {
+        const res = await request(app).post("/logout");
+        expect(res.statusCode).toBe(200);
+    });
+
+    /* authorization test */
+    test ("no token", async ()=>{
+        const res = await request(app).get("/users");
+        expect(res.statusCode).toBe(401);
+    });
+    // artist
+    test("artist creates artist", async ()=>{
+        const res = await (await request(app).post("/artists")).set("Authorization", `Bearer ${artistToken}`).send({ name: "Michael Jackson", genre: "Rock"});
+        expect(res.statusCode).toBe(201);
+    });
+    //admin
+    test("admin creates event", async ()=>{
+        const res = await (await request(app).post("/events")).set("Authorization", `Bearer ${adminToken}`).send({ title: "Cochella", venue: "the Diamond", date: "12-01-2025", genre: "Hiphop"});
+        expect(res.statusCode).toBe(201);
+    });
+
+    // Duplicate User error test
+    test ("duplicate users detected", async ()=>{
+        const res = await request(app).post("/users").send({name:"Duplicate", email: "user@test.com", password: "password123"});
+        expect(res.statusCode).toBe(400);
+    });
+
 });
+

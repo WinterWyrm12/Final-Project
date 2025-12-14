@@ -20,7 +20,7 @@ module.exports = (Sequelize, DataTypes) => {
                 unique: true
             },
 
-            passwordHash: {
+            password: {
                 type: DataTypes.STRING,
                 allowNull: false
             },
@@ -30,7 +30,7 @@ module.exports = (Sequelize, DataTypes) => {
                 allowNull: false,
                 defaultValue: "guest",
                 validate: {
-                    isIn: [['manager', 'artist', 'guest']]
+                    isIn: [['admin', 'artist', 'guest']]
                 }
             }
         });
