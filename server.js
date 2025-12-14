@@ -446,6 +446,9 @@ app.post("/logout", (req,res)=>{
 
 // -------------------- //
 
+// For webpage
+app.get("/", (req, res)=> res.send("Concert Planner API is running."))
+
 // Error handeling middleware
 app.use((err, req, res, next) => {
     console.error('Unhandled error:', err);
